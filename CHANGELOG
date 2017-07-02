@@ -1,3 +1,7 @@
+## 0.1.0 (July 2, 2017)
+
+- Add initial code to read arguments.
+
 ## 0.0.4 (July 2, 2017)
 
 - Updates to the Travis configuration to only `gox` build after success
