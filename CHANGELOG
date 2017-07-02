@@ -1,4 +1,8 @@
-## 0.0.3 (July 1, 2017)
+## 0.0.4 (July 2, 2017)
+
+- Addition of Travis build job
+
+## 0.0.3 (July 2, 2017)
 
 - Removing required `type` field
 

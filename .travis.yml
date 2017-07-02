@@ -1,0 +1,26 @@
+language: go
+go:
+  - 1.8
+
+# Don't build other branches that are being used for PRs.
+# Currently only the master branch is used in this repo.
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - $GOPATH/src
+    - $GOPATH/pkg
+
+#before_install:
+
+# Not sure what this does yet
+- # diff -u <(echo -n) <(gofmt -d -s .)
+
+#install:
+# Install all external dependencies, ensuring they are updated.
+
+script:
+  - go vet ./...
+  - go test -v
