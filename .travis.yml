@@ -15,9 +15,6 @@ cache:
 
 before_install:
 - go get github.com/mitchellh/gox
-- gox -build-toolchain
-# Not sure what this does yet
-#- # diff -u <(echo -n) <(gofmt -d -s .)
 
 #install:
 # Install all external dependencies, ensuring they are updated.
@@ -25,3 +22,6 @@ before_install:
 script:
   - go vet ./...
   - go test -v
+
+after_success:
+  - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"

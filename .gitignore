@@ -17,3 +17,6 @@
 
 # Goland/IntelliJ files
 .idea/
+
+# Distribution folder
+dist/

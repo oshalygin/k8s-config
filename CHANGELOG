@@ -1,5 +1,9 @@
 ## 0.0.4 (July 2, 2017)
 
+- Updates to the Travis configuration to only `gox` build after success
+
+## 0.0.4 (July 2, 2017)
+
 - Addition of Travis build job
 
 ## 0.0.3 (July 2, 2017)
