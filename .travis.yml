@@ -13,10 +13,11 @@ cache:
     - $GOPATH/src
     - $GOPATH/pkg
 
-#before_install:
-
+before_install:
+- go get github.com/mitchellh/gox
+- gox -build-toolchain
 # Not sure what this does yet
-- # diff -u <(echo -n) <(gofmt -d -s .)
+#- # diff -u <(echo -n) <(gofmt -d -s .)
 
 #install:
 # Install all external dependencies, ensuring they are updated.
