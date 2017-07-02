@@ -1,3 +1,7 @@
+## 0.0.3 (July 1, 2017)
+
+- Removing required `type` field
+
 ## 0.0.2 (July 1, 2017)
 
 - Additional documentation and project layout
