@@ -45,7 +45,7 @@ k8s-config --tag=1.03
 
 ### Command Line Arguments
 
-**type**: (required) The Kubernetes type that you want to update.  Depending on the type, the utility will parse it different, this value is required.
+**type**: The Kubernetes type that you want to update.  Depending on the type, the utility will parse it different, this value is required.
 
 **image**: The new image name
  
