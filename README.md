@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/oshalygin/k8s-config.svg?branch=master)](https://travis-ci.org/oshalygin/k8s-config)
+[![Coverage Status](https://coveralls.io/repos/github/oshalygin/k8s-config/badge.svg?branch=master)](https://coveralls.io/github/oshalygin/k8s-config?branch=master)
 # Introduction
 
 This is a simple and straightforward CLI that allows you to update your Kubernetes configuration files dynamically during a build.
