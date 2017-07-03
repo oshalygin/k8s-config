@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/oshalygin/k8s-config.svg?branch=master)](https://travis-ci.org/oshalygin/k8s-config)
 [![Coverage Status](https://coveralls.io/repos/github/oshalygin/k8s-config/badge.svg?branch=master)](https://coveralls.io/github/oshalygin/k8s-config?branch=master)
+[![Code Climate](https://codeclimate.com/repos/59598bef371afb02870005c1/badges/d8e88772201d137ea8b7/gpa.svg)](https://codeclimate.com/repos/59598bef371afb02870005c1/feed)
+[![Issue Count](https://codeclimate.com/repos/59598bef371afb02870005c1/badges/d8e88772201d137ea8b7/issue_count.svg)](https://codeclimate.com/repos/593e287a150338028600480b/feed)
 # Introduction
 
 This is a simple and straightforward CLI that allows you to update your Kubernetes configuration files dynamically during a build.
