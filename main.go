@@ -7,6 +7,8 @@ import (
 
 	"io/ioutil"
 
+	"strings"
+
 	"github.com/fatih/color"
 	"github.com/oshalygin/k8s-config/services"
 )
@@ -23,8 +25,10 @@ func main() {
 	err = checkRequiredFlags(*configurationType, *image, *imageTag, *filePath)
 
 	if err != nil {
-		color.Red("Error: %v", err)
-		color.Black("--------------------")
+		errorOutput := fmt.Sprintf("Error: %v", err)
+		color.Red(errorOutput)
+		fmt.Println(strings.Repeat("-", len(errorOutput)))
+
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
