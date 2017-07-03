@@ -3,6 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
+	"github.com/fatih/color"
 )
 
 func main() {
@@ -12,7 +15,14 @@ func main() {
 	filePath := flag.String("file-path", "", "Configuration file location")
 
 	flag.Parse()
-	checkRequiredFlags(*configurationType, *image, *imageTag, *filePath)
+
+	err := checkRequiredFlags(*configurationType, *image, *imageTag, *filePath)
+	if err != nil {
+		color.Red("Error: %v", err)
+		color.Black("--------------------")
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
 
 	fmt.Printf("type: %s\n", *configurationType)
 	fmt.Printf("image: %s\n", *image)
