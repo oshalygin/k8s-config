@@ -19,17 +19,10 @@ before_install:
 - go get github.com/axw/gocov/gocov
 - go get github.com/mattn/goveralls
 
-#install:
-# Install all external dependencies, ensuring they are updated.
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
 script:
   - go vet ./...
-  - ./cc-test-reporter before-build
-  - richgo test -v -cover
-  - go test -coverprofile=c.out
-  - ./cc-test-reporter after-build -t gocov
+  - golint ./...
+  - richgo test -v -cover -coverprofile=c.out
   - goveralls -coverprofile=c.out -service travis-ci -repotoken $COVERALLS_TOKEN
 
 after_success:
