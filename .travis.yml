@@ -8,13 +8,14 @@ branches:
   only:
     - master
 
-#cache:
-                  #  directories:
-                  #    - $GOPATH/src
-                  #    - $GOPATH/pkg
+cache:
+  directories:
+    - $GOPATH/src
+    - $GOPATH/pkg
 
 before_install:
 - go get github.com/mitchellh/gox
+- go get -u github.com/kyoh86/richgo
 - go get github.com/axw/gocov/gocov
 - go get github.com/mattn/goveralls
 
@@ -26,7 +27,8 @@ before_script:
 script:
   - go vet ./...
   - ./cc-test-reporter before-build
-  - go test -coverprofile=c.out -v
+  - richgo test -v -cover
+  - go test -coverprofile=c.out
   - ./cc-test-reporter after-build -t gocov
   - goveralls -coverprofile=c.out -service travis-ci -repotoken $COVERALLS_TOKEN
 
