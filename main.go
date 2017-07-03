@@ -12,7 +12,7 @@ func main() {
 	filePath := flag.String("file-path", "", "Configuration file location")
 
 	flag.Parse()
-	CheckRequiredFlags(*configurationType, *image, *imageTag, *filePath)
+	checkRequiredFlags(*configurationType, *image, *imageTag, *filePath)
 
 	fmt.Printf("type: %s\n", *configurationType)
 	fmt.Printf("image: %s\n", *image)
