@@ -55,12 +55,12 @@ k8s-config --tag=1.03
  
 **version**: If the image is excluded and just the version is passed in, you can easily just bump the version of the container image(assuming there's a single image per pod)
 
-### Limitations
+# Limitations
 _Note_: This list will change accordingly over the development of this utility.
 * Only `yaml` configuration files(Not `JSON`)
 * Only `deployment` types.
 * Only single container deployment configurations.
 
-### License
+# License
 
 [MIT](LICENSE)
