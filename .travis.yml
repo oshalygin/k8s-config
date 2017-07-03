@@ -8,11 +8,6 @@ branches:
   only:
     - master
 
-cache:
-  directories:
-    - $GOPATH/src
-    - $GOPATH/pkg
-
 before_install:
 - go get github.com/mitchellh/gox
 - go get -u github.com/kyoh86/richgo
