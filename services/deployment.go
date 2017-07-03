@@ -3,6 +3,8 @@ package services
 import (
 	"strings"
 
+	"errors"
+
 	"github.com/oshalygin/k8s-config/models"
 	"gopkg.in/yaml.v2"
 )
@@ -23,11 +25,17 @@ func parseConfigurationFile(file []byte) (configurationFile models.Deployment, e
 	return
 }
 
-func updateImageTag(deployment models.Deployment, imageTag string) models.Deployment {
+func updateImageTag(deployment models.Deployment, imageTag string) (models.Deployment, error) {
+
+	numberOfContainers := len(deployment.Spec.Template.Spec.Containers)
+	if numberOfContainers > 1 {
+		return models.Deployment{}, errors.New("Only a single container is supported at this time")
+	}
+
 	currentImage := deployment.Spec.Template.Spec.Containers[0].Image
 	image := strings.Split(currentImage, ":")[0]
 	updatedImage := image + ":" + imageTag
 
 	deployment.Spec.Template.Spec.Containers[0].Image = updatedImage
-	return deployment
+	return deployment, nil
 }

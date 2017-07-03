@@ -1,6 +1,10 @@
 package services
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/oshalygin/k8s-config/models"
+)
 
 const configurationFile string = `
 apiVersion: extensions/v1beta1
@@ -123,11 +127,28 @@ func Test_updateImageTag_ShouldUpdateTheImageTagToThePassedInTagValue(t *testing
 
 	expected := "us.gcr.io/mdjs-io/merchant-dashboard:1.1.1"
 	deployment, _ := parseConfigurationFile(file)
-	updatedDeployment := updateImageTag(deployment, imageTag)
+	updatedDeployment, _ := updateImageTag(deployment, imageTag)
 
 	actual := updatedDeployment.Spec.Template.Spec.Containers[0].Image
 
 	if expected != actual {
 		t.Errorf("\nexpected: %s\nactual: %s", expected, actual)
 	}
+}
+
+func Test_updateImageTag_ShouldReturnAnErrorIfADeploymentModelIsPassedWithMultipleContainers(t *testing.T) {
+
+	imageTag := "1.1.1"
+
+	deployment := models.Deployment{}
+	deployment.Spec.Template.Spec.Containers = []models.Container{
+		{Name: "us.gcr.io/mdjs-io/web-client:1.1.1"},
+		{Name: "us.gcr.io/mdjs-io/backend-service:2.1.5"},
+	}
+	_, err := updateImageTag(deployment, imageTag)
+
+	if err == nil {
+		t.Errorf("should throw an error that only a single container is supported")
+	}
+
 }

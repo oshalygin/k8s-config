@@ -28,43 +28,46 @@ type Deployment struct {
 				}
 			}
 			Spec struct {
-				Containers []struct {
-					Name         string
-					Image        string
-					VolumeMounts []struct {
-						MountPath string
-						Name      string
-					}
-					Env []struct {
-						Name      string
-						ValueFrom struct {
-							SecretKeyRef struct {
-								Name string
-								Key  string
-							}
-						}
-					}
-					ImagePullPolicy string
-					Ports           []struct {
-						ContainerPort int
-					}
-					ReadinessProbe struct {
-						HTTPGet struct {
-							Path string
-							Port int
-						}
-						InitialDelaySeconds int
-						TimeoutSeconds      int
-						SuccessThreshold    int
-						FailureThreshold    int
-					}
-				}
-				Volumes []struct {
+				Containers []Container
+				Volumes    []struct {
 					Name     string
 					EmptyDir struct {
 					}
 				}
 			}
 		}
+	}
+}
+
+// Container represents the running container in a pod
+type Container struct {
+	Name         string
+	Image        string
+	VolumeMounts []struct {
+		MountPath string
+		Name      string
+	}
+	Env []struct {
+		Name      string
+		ValueFrom struct {
+			SecretKeyRef struct {
+				Name string
+				Key  string
+			}
+		}
+	}
+	ImagePullPolicy string
+	Ports           []struct {
+		ContainerPort int
+	}
+	ReadinessProbe struct {
+		HTTPGet struct {
+			Path string
+			Port int
+		}
+		InitialDelaySeconds int
+		TimeoutSeconds      int
+		SuccessThreshold    int
+		FailureThreshold    int
 	}
 }
