@@ -31,6 +31,11 @@ func checkRequiredFlags(configurationType string, image string, imageTag string,
 		}
 	}
 
+	if image != "" && imageTag != "" {
+		err := `Set either the "image" or "imageTag" flag, NOT both`
+		return errors.New(err)
+	}
+
 	return nil
 
 }

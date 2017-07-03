@@ -10,9 +10,9 @@ func Test_checkRequiredFlags_ShouldThrowAnErrorIfImageAndTagAreNotPassed(t *test
 	image := ""
 	filePath := "deployment.yaml"
 
-	err := checkRequiredFlags(configurationType, image, filePath, imageTag)
+	err := checkRequiredFlags(configurationType, image, imageTag, filePath)
 	if err == nil {
-		t.Errorf("should throw an error if both image and filepath are empty")
+		t.Errorf("should throw an error if both image and imageTag are empty")
 	}
 }
 
@@ -74,5 +74,17 @@ func Test_checkRequiredFlags_ShouldThrowAnErrorIfTheImageDoesNotContainATag(t *t
 	err := checkRequiredFlags(configurationType, image, imageTag, filePath)
 	if err == nil {
 		t.Errorf("should throw an error if the tag is missing from the image")
+	}
+}
+
+func Test_checkRequiredFlags_ShouldThrowAnErrorIfBothImageAndImageTagAreSet(t *testing.T) {
+	imageTag := "1.2.0"
+	configurationType := "deployment"
+	image := "oshalygin/my-web-site:1.2.0"
+	filePath := "deployment.yaml"
+
+	err := checkRequiredFlags(configurationType, image, imageTag, filePath)
+	if err == nil {
+		t.Errorf("should throw an error if both the image and image tag are set")
 	}
 }
