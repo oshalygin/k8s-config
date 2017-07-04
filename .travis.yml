@@ -14,11 +14,12 @@ before_install:
 - go get github.com/axw/gocov/gocov
 - go get github.com/mattn/goveralls
 - go get -u github.com/golang/lint/golint
+- go get -u github.com/haya14busa/goverage
 
 script:
   - go vet ./...
-  - golint -set_exit_status . models
-  - richgo test ./... -v -cover -coverprofile=c.out
+  - golint -set_exit_status . models services
+  - goverage -v -coverprofile=c.out ./...
   - goveralls -coverprofile=c.out -service travis-ci -repotoken $COVERALLS_TOKEN
 
 after_success:
