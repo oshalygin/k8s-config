@@ -13,16 +13,23 @@ import (
 	"github.com/oshalygin/k8s-config/services"
 )
 
+var configurationType string
+var image string
+var imageTag string
+var filePath string
+
+func init() {
+	flag.StringVar(&configurationType, "type", "deployment", "Kubernetes configuration type, eg: deployment, rc, secret")
+	flag.StringVar(&image, "image", "", "Docker image name")
+	flag.StringVar(&imageTag, "tag", "", "Docker image tag")
+	flag.StringVar(&filePath, "file-path", "", "Configuration file location")
+	flag.Parse()
+}
+
 func main() {
 	var err error
 
-	configurationType := flag.String("type", "deployment", "Kubernetes configuration type, eg: deployment, rc, secret")
-	image := flag.String("image", "", "Docker image name")
-	imageTag := flag.String("tag", "", "Docker image tag")
-	filePath := flag.String("file-path", "", "Configuration file location")
-
-	flag.Parse()
-	err = checkRequiredFlags(*configurationType, *image, *imageTag, *filePath)
+	err = checkRequiredFlags(configurationType, image, imageTag, filePath)
 
 	if err != nil {
 		errorOutput := fmt.Sprintf("Error: %v", err)
@@ -33,17 +40,22 @@ func main() {
 		os.Exit(1)
 	}
 
-	file, err := ioutil.ReadFile(*filePath)
+	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		color.Red("Error: %v", err)
 		os.Exit(1)
 	}
 
-	services.UpdateDeploymentConfiguration(file, *image, *imageTag)
+	deployment, updatedDeployment, err := services.UpdateDeploymentConfiguration(file, image, imageTag)
 
-	fmt.Printf("type: %s\n", *configurationType)
-	fmt.Printf("image: %s\n", *image)
-	fmt.Printf("tag: %s\n", *imageTag)
-	fmt.Printf("file-path: %s\n", *filePath)
+	if err != nil {
+		color.Red("Error: %v", err)
+		os.Exit(1)
+	}
 
+	currentImage := deployment.Spec.Template.Spec.Containers[0].Image
+	newImage := updatedDeployment.Spec.Template.Spec.Containers[0].Image
+
+	color.Blue("current image: %s", currentImage)
+	color.Green("new image: %s\n", newImage)
 }

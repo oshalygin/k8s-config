@@ -10,29 +10,28 @@ import (
 )
 
 // UpdateDeploymentConfiguration takes in a file, image or imageTag to provide an updated configuration object
-func UpdateDeploymentConfiguration(file []byte, image string, imageTag string) (models.Deployment, error) {
+func UpdateDeploymentConfiguration(file []byte, image string, imageTag string) (models.Deployment, models.Deployment, error) {
 	deployment, err := parseConfigurationFile(file)
 	if err != nil {
-		return models.Deployment{}, err
+		return models.Deployment{}, models.Deployment{}, err
 	}
 
 	if imageTag != "" {
 		updatedDeployment, err := updateImageTag(deployment, imageTag)
-
 		if err != nil {
-			return models.Deployment{}, err
+			return deployment, models.Deployment{}, err
 		}
 
-		return updatedDeployment, nil
+		return deployment, updatedDeployment, nil
 	}
 
 	updatedDeployment, err := updateImage(deployment, image)
 
 	if err != nil {
-		return models.Deployment{}, err
+		return deployment, models.Deployment{}, err
 	}
 
-	return updatedDeployment, nil
+	return deployment, updatedDeployment, nil
 
 }
 
