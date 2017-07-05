@@ -46,16 +46,17 @@ func main() {
 		os.Exit(1)
 	}
 
-	deployment, updatedDeployment, err := services.UpdateDeploymentConfiguration(file, image, imageTag)
+	currentImage, updatedDeployment, err := services.UpdateDeploymentConfiguration(file, image, imageTag)
 
 	if err != nil {
 		color.Red("Error: %v", err)
 		os.Exit(1)
 	}
 
-	currentImage := deployment.Spec.Template.Spec.Containers[0].Image
 	newImage := updatedDeployment.Spec.Template.Spec.Containers[0].Image
 
-	color.Blue("current image: %s", currentImage)
-	color.Green("new image: %s\n", newImage)
+	fmt.Println("Current Image:")
+	color.Blue("%s", currentImage)
+	fmt.Println("New Image:")
+	color.Green("%s\n", newImage)
 }
