@@ -44,7 +44,6 @@ k8s-config --type=deployment \
 
 k8s-config --tag=1.03
              --file-path=../test-files/deployment.yaml \  
-             --image='oshalygin/my-website-image:1.0.0'             
 ```
 
 ### Command Line Arguments
