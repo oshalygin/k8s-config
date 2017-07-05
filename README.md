@@ -43,7 +43,7 @@ k8s-config --type=deployment \
 # use the utility effectively
 
 k8s-config --tag=1.03
-             --file-path=../test-files/deployment.yaml \  
+           --file-path=../test-files/deployment.yaml 
 ```
 
 ### Command Line Arguments
@@ -51,8 +51,10 @@ k8s-config --tag=1.03
 **type**: The Kubernetes type that you want to update.  Depending on the type, the utility will parse it different, this value is required.
 
 **image**: The new image name
+
+**file-path**: The location of the configuration file
  
-**version**: If the image is excluded and just the version is passed in, you can easily just bump the version of the container image(assuming there's a single image per pod)
+**tag**: If the image is excluded and just the version is passed in, you can easily just bump the version of the container image(assuming there's a single image per pod)
 
 # Limitations
 _Note_: This list will change accordingly over the development of this utility.
