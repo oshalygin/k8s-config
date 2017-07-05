@@ -2,7 +2,7 @@ package models
 
 // Deployment provides declarative updates for Pods and ReplicaSets (the next-generation ReplicationController).
 type Deployment struct {
-	APIVersion string
+	APIVersion string `yaml:"apiVersion"`
 	Kind       string
 	Metadata   struct {
 		Name      string
@@ -14,12 +14,10 @@ type Deployment struct {
 	}
 	Spec struct {
 		Replicas             int
-		RevisionHistoryLimit int
+		RevisionHistoryLimit int `yaml:"revisionHistoryLimit"`
 		Strategy             struct {
-			RollingUpdate struct {
-				MaxUnavailable int
-			}
-			Type string
+			RollingUpdate `yaml:"rollingUpdate"`
+			Type          string
 		}
 		Template struct {
 			Metadata struct {
@@ -31,8 +29,7 @@ type Deployment struct {
 				Containers []Container
 				Volumes    []struct {
 					Name     string
-					EmptyDir struct {
-					}
+					EmptyDir `yaml:"emptyDir"`
 				}
 			}
 		}
@@ -43,31 +40,55 @@ type Deployment struct {
 type Container struct {
 	Name         string
 	Image        string
-	VolumeMounts []struct {
-		MountPath string
+	VolumeMounts `yaml:"volumeMounts"`
+	Env          []struct {
 		Name      string
+		ValueFrom `yaml:"valueFrom"`
 	}
-	Env []struct {
-		Name      string
-		ValueFrom struct {
-			SecretKeyRef struct {
-				Name string
-				Key  string
-			}
-		}
-	}
-	ImagePullPolicy string
+	ImagePullPolicy string `yaml:"imagePullPolicy"`
 	Ports           []struct {
-		ContainerPort int
+		ContainerPort int `yaml:"containerPort"`
 	}
-	ReadinessProbe struct {
-		HTTPGet struct {
-			Path string
-			Port int
-		}
-		InitialDelaySeconds int
-		TimeoutSeconds      int
-		SuccessThreshold    int
-		FailureThreshold    int
-	}
+	ReadinessProbe `yaml:"readinessProbe"`
+}
+
+// RollingUpdate represents the rolling update strategy
+type RollingUpdate struct {
+	MaxUnavailable int `yaml:"maxUnavailable"`
+}
+
+// HTTPGet configures the readiness probes
+type HTTPGet struct {
+	Path string
+	Port int
+}
+
+// ReadinessProbe describes the configuration around readiness checks
+type ReadinessProbe struct {
+	HTTPGet             `yaml:"httpGet"`
+	InitialDelaySeconds int `yaml:"initialDelaySeconds"`
+	TimeoutSeconds      int `yaml:"timeoutSeconds"`
+	SuccessThreshold    int `yaml:"successThreshold"`
+	FailureThreshold    int `yaml:"failureThreshold"`
+}
+
+// SecretKeyRef provides a description to how secrets are pulled
+type SecretKeyRef struct {
+	Name string
+	Key  string
+}
+
+// ValueFrom is the configuration object of how values are pulled
+type ValueFrom struct {
+	SecretKeyRef `yaml:"secretKeyRef"`
+}
+
+// VolumeMounts provides a configuration for additional pod volumes
+type VolumeMounts []struct {
+	MountPath string `yaml:"mountPath"`
+	Name      string
+}
+
+// EmptyDir provides a descriptor for volume configuration
+type EmptyDir struct {
 }
