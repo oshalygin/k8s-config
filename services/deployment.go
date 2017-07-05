@@ -5,33 +5,39 @@ import (
 
 	"errors"
 
+	"io/ioutil"
+
 	"github.com/oshalygin/k8s-config/models"
 	"gopkg.in/yaml.v2"
 )
 
 // UpdateDeploymentConfiguration takes in a file, image or imageTag to provide an updated configuration object
-func UpdateDeploymentConfiguration(file []byte, image string, imageTag string) (string, models.Deployment, error) {
+func UpdateDeploymentConfiguration(file []byte, image string, imageTag string, destination string) (string, models.Deployment, error) {
 	deployment, err := parseConfigurationFile(file)
+	updatedDeployment := models.Deployment{}
 	if err != nil {
 		return "", models.Deployment{}, err
 	}
 
 	originalImage := deployment.Spec.Template.Spec.Containers[0].Image
+
 	if imageTag != "" {
-		updatedDeployment, err := updateImageTag(deployment, imageTag)
-		if err != nil {
-			return originalImage, models.Deployment{}, err
-		}
-
-		return originalImage, updatedDeployment, nil
+		updatedDeployment, err = updateImageTag(deployment, imageTag)
+	} else {
+		updatedDeployment, err = updateImage(deployment, image)
 	}
-
-	updatedDeployment, err := updateImage(deployment, image)
 
 	if err != nil {
 		return originalImage, models.Deployment{}, err
 	}
 
+	if destination != "" {
+		err := saveConfiguration(updatedDeployment, destination)
+		if err != nil {
+			return originalImage, updatedDeployment, err
+		}
+
+	}
 	return originalImage, updatedDeployment, nil
 
 }
@@ -39,6 +45,20 @@ func UpdateDeploymentConfiguration(file []byte, image string, imageTag string) (
 func parseConfigurationFile(file []byte) (configurationFile models.Deployment, err error) {
 	err = yaml.Unmarshal(file, &configurationFile)
 	return
+}
+
+func saveConfiguration(configurationFile models.Deployment, destination string) error {
+	data, err := yaml.Marshal(configurationFile)
+
+	if err != nil {
+		return errors.New("Could not save the file to the destination")
+	}
+	err = ioutil.WriteFile(destination, data, 0644)
+	if err != nil {
+		return errors.New("Could not save the file to the destination")
+	}
+
+	return err
 }
 
 func updateImageTag(deployment models.Deployment, imageTag string) (models.Deployment, error) {

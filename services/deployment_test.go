@@ -81,7 +81,8 @@ func Test_UpdateDeploymentConfiguration_ShouldReturnAnErrorIfTheFileCouldNotBePa
 	file := []byte{0, 0, 0}
 	image := ""
 	imageTag := "1.4.4"
-	_, _, err := UpdateDeploymentConfiguration(file, image, imageTag)
+	destination := ""
+	_, _, err := UpdateDeploymentConfiguration(file, image, imageTag, destination)
 
 	if err == nil {
 		t.Errorf("should throw an error if the file could not be parsed")

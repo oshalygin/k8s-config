@@ -46,7 +46,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	currentImage, updatedDeployment, err := services.UpdateDeploymentConfiguration(file, image, imageTag)
+	currentImage, updatedDeployment, err := services.UpdateDeploymentConfiguration(file, image, imageTag, filePath)
 
 	if err != nil {
 		color.Red("Error: %v", err)
