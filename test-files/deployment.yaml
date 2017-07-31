@@ -50,6 +50,8 @@ spec:
                 secretKeyRef:
                   name: env-variables-secret
                   key: domain_endpoint
+            - name: GCLOUD_DIAGNOSTICS_CONFIG
+              value: ./utilities/trace.js
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

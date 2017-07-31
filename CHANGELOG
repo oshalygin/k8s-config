@@ -1,3 +1,7 @@
+## 1.0.2 (July 30, 2017)
+
+- Updated deployment test file which includes a strict `value` instead of pulling from configuration
+
 ## 1.0.1 (July 15, 2017)
 
 - Add deployment script error handling
