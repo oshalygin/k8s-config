@@ -1,3 +1,7 @@
+## 1.1.0 (July 30, 2017)
+
+- Updated deployment service to now properly handle null and zero values with `omitempty`.
+
 ## 1.0.2 (July 30, 2017)
 
 - Updated deployment test file which includes a strict `value` instead of pulling from configuration

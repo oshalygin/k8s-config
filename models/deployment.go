@@ -43,7 +43,8 @@ type Container struct {
 	VolumeMounts `yaml:"volumeMounts"`
 	Env          []struct {
 		Name      string
-		ValueFrom `yaml:"valueFrom"`
+		ValueFrom `yaml:"valueFrom,omitempty"`
+		Value     string `yaml:"value,omitempty"`
 	}
 	ImagePullPolicy string `yaml:"imagePullPolicy"`
 	Ports           []struct {
