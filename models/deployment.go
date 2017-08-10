@@ -79,9 +79,15 @@ type SecretKeyRef struct {
 	Key  string
 }
 
+// FieldRef is the configuration object of how values are pulled from the cluster
+type FieldRef struct {
+	FieldPath string `yaml:"fieldPath,omitempty"`
+}
+
 // ValueFrom is the configuration object of how values are pulled
 type ValueFrom struct {
-	SecretKeyRef `yaml:"secretKeyRef"`
+	SecretKeyRef `yaml:"secretKeyRef,omitempty"`
+	FieldRef     `yaml:"fieldRef,omitempty"`
 }
 
 // VolumeMounts provides a configuration for additional pod volumes

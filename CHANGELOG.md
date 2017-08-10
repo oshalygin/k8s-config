@@ -1,3 +1,7 @@
+## 1.2.0 (August 09, 2017)
+
+- Updated deployment service to now properly handle null and zero values with `omitempty` for `fieldRef` environment variable properties.
+
 ## 1.1.0 (July 30, 2017)
 
 - Updated deployment service to now properly handle null and zero values with `omitempty`.
