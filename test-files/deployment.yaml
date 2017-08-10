@@ -52,6 +52,17 @@ spec:
                   key: domain_endpoint
             - name: GCLOUD_DIAGNOSTICS_CONFIG
               value: ./utilities/trace.js
+            - name: POD_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: CONTAINER_NAME
+              value: fe-web
+            - name: CLUSTER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: env-variables-secret
+                  key: cluster_name
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
